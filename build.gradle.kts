@@ -8,7 +8,15 @@ group = "cn.regexp.code.assistant"
 version = "1.0.0"
 
 repositories {
+    mavenLocal()
     mavenCentral()
+}
+
+dependencies {
+    implementation("org.projectlombok:lombok:1.18.30")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
+    implementation("cn.hutool:hutool-all:5.8.25")
+    implementation("com.alibaba.fastjson2:fastjson2:2.0.41")
 }
 
 // Configure Gradle IntelliJ Plugin
@@ -17,7 +25,7 @@ intellij {
     version.set("2023.1.5")
     type.set("IC") // Target IDE Platform
 
-    plugins.set(listOf(/* Plugin Dependencies */))
+    plugins.set(listOf("Git4Idea"))
 }
 
 tasks {
