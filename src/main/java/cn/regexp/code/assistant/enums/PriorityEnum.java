@@ -7,6 +7,7 @@ import lombok.Getter;
  * @author Regexpei
  * @date 2024/7/7 19:25
  * @description 优先级枚举
+ * @since 1.0.0
  */
 @Getter
 @AllArgsConstructor

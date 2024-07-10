@@ -12,6 +12,7 @@ import com.intellij.openapi.ui.Messages;
  * @author Regexpei
  * @date 2024/7/7 15:49
  * @description 标记问题操作
+ * @since 1.0.0
  */
 public class MarkIssueAction extends AnAction {
 

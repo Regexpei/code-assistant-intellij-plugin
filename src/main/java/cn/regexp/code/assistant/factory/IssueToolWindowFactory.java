@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Regexpei
  * @date 2024/7/7 20:56
  * @description 问题工具窗口工厂
+ * @since 1.0.0
  */
 public class IssueToolWindowFactory implements ToolWindowFactory {
 

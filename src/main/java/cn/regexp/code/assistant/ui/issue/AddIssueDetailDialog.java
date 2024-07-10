@@ -15,6 +15,7 @@ import java.awt.*;
  * @author Regexpei
  * @date 2024/7/7 16:31
  * @description 登记问题
+ * @since 1.0.0
  */
 public class AddIssueDetailDialog extends DialogWrapper {
 
