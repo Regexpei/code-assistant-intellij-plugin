@@ -31,6 +31,8 @@ public class CodeAssistantModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(IssueToolWindowFactory.class);
+
+        install(new CodeAssistantModule());
     }
 
 
