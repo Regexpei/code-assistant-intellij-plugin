@@ -3,6 +3,9 @@ package cn.regexp.code.assistant.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Regexpei
  * @date 2024/7/7 19:25
@@ -19,6 +22,14 @@ public enum PriorityEnum {
     private final int code;
     private final String desc;
 
+    private static final Map<Integer, String> CODE_TO_DESC_MAP = new HashMap<>();
+
+    static {
+        for (PriorityEnum value : PriorityEnum.values()) {
+            CODE_TO_DESC_MAP.put(value.getCode(), value.getDesc());
+        }
+    }
+
     /**
      * 根据 code 获取描述
      *
@@ -26,11 +37,6 @@ public enum PriorityEnum {
      * @return 描述
      */
     public static String getDesc(int code) {
-        for (PriorityEnum value : PriorityEnum.values()) {
-            if (value.getCode() == code) {
-                return value.getDesc();
-            }
-        }
-        return null;
+        return CODE_TO_DESC_MAP.getOrDefault(code, "");
     }
 }
