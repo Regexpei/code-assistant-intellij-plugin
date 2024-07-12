@@ -3,6 +3,7 @@ package cn.regexp.code.assistant.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.beans.Transient;
 import java.util.Date;
 
 /**
@@ -19,6 +20,11 @@ public class Issue {
      * 主键
      */
     private Long id;
+
+    /**
+     * 问题编号
+     */
+    private transient String issueNo;
 
     /**
      * gitUrl
