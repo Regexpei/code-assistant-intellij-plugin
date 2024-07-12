@@ -12,8 +12,9 @@ public class IssueToolWindow extends SimpleToolWindowPanel {
 
     public IssueToolWindow() {
         super(false, false);
-
-
+        IssueListPanel issueListPanel = new IssueListPanel();
+        issueListPanel.initData();
+        setContent(issueListPanel);
     }
 
 

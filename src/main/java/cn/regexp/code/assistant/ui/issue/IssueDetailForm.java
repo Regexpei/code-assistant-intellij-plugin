@@ -1,5 +1,6 @@
 package cn.regexp.code.assistant.ui.issue;
 
+import cn.hutool.core.date.DateTime;
 import cn.regexp.code.assistant.entity.Issue;
 import cn.regexp.code.assistant.enums.IssueLevelEnum;
 import cn.regexp.code.assistant.enums.IssueStatusEnum;
@@ -85,6 +86,7 @@ public class IssueDetailForm extends JPanel {
 
     public Issue mapToIssueDTO() {
         Issue issue = new Issue();
+        issue.setId(1L);
         issue.setGitUrl(GitRepositoryUtils.getGitUrl(project));
         issue.setProjectName(project.getName());
         issue.setBranchName(this.currentBranchField.getText());
@@ -100,6 +102,8 @@ public class IssueDetailForm extends JPanel {
         issue.setCodeSegment(this.codeSegmentArea.getText());
         issue.setIssueDetail(this.issueDetailArea.getText());
         issue.setSuggestion(this.suggestionArea.getText());
+        issue.setCreatedTime(DateTime.now());
+        issue.setUpdatedTime(DateTime.now());
         return issue;
     }
 

@@ -21,4 +21,19 @@ public enum IssueLevelEnum {
     private final int code;
     private final String desc;
 
+
+    /**
+     * 根据 code 获取描述
+     *
+     * @param code code
+     * @return 描述
+     */
+    public static String getDesc(int code) {
+        for (IssueLevelEnum value : IssueLevelEnum.values()) {
+            if (value.getCode() == code) {
+                return value.getDesc();
+            }
+        }
+        return null;
+    }
 }

@@ -17,6 +17,10 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.30")
     implementation("cn.hutool:hutool-all:5.8.25")
     implementation("com.alibaba.fastjson2:fastjson2:2.0.41")
+    // 控制反转和依赖注入框架，类似 Spring
+    implementation("com.google.inject:guice:5.1.0") {
+        exclude(group = "com.google.guava", module = "guava")
+    }
 }
 
 // Configure Gradle IntelliJ Plugin

@@ -1,5 +1,6 @@
 package cn.regexp.code.assistant.factory;
 
+import cn.regexp.code.assistant.CodeAssistantModule;
 import cn.regexp.code.assistant.ui.issue.IssueToolWindow;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
@@ -16,12 +17,13 @@ import org.jetbrains.annotations.NotNull;
  */
 public class IssueToolWindowFactory implements ToolWindowFactory {
 
-    private static final String DISPLAY_NAME = "Issue";
+    private static final String DISPLAY_NAME = "Issue List";
+
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        IssueToolWindow issueToolWindow = new IssueToolWindow();
-        ContentFactory contentFactory = ContentFactory.getInstance();
+        IssueToolWindow issueToolWindow = CodeAssistantModule.getInstance(IssueToolWindow.class);
 
+        ContentFactory contentFactory = ContentFactory.getInstance();
         Content content = contentFactory.createContent(issueToolWindow, DISPLAY_NAME, false);
         content.setCloseable(false);
         toolWindow.getContentManager().addContent(content);
