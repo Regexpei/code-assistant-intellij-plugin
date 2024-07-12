@@ -1,5 +1,7 @@
 package cn.regexp.code.assistant.ui.issue;
 
+import com.google.inject.Inject;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.SimpleToolWindowPanel;
 
 /**
@@ -8,14 +10,18 @@ import com.intellij.openapi.ui.SimpleToolWindowPanel;
  * @description 问题工具窗口
  * @since 1.0.0
  */
-public class IssueToolWindow extends SimpleToolWindowPanel {
+public class IssueToolWindow {
 
-    public IssueToolWindow() {
-        super(false, false);
-        IssueListPanel issueListPanel = new IssueListPanel();
+    @Inject
+    private IssueListPanel issueListPanel;
+
+    public SimpleToolWindowPanel createToolWindowContent(Project project) {
+        issueListPanel.setProject(project);
         issueListPanel.initData();
-        setContent(issueListPanel);
+
+        SimpleToolWindowPanel panel = new SimpleToolWindowPanel(true, true);
+        panel.setContent(issueListPanel);
+
+        return panel;
     }
-
-
 }
