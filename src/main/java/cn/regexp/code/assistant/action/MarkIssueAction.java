@@ -1,6 +1,6 @@
 package cn.regexp.code.assistant.action;
 
-import cn.regexp.code.assistant.ui.issue.AddIssueDetailDialog;
+import cn.regexp.code.assistant.ui.issue.AddIssueDialog;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataKey;
@@ -25,10 +25,11 @@ public class MarkIssueAction extends AnAction {
 
         SelectionModel selectionModel = editor.getSelectionModel();
         if (!selectionModel.hasSelection()) {
-            Messages.showErrorDialog("请选中文件内容再点击！", "Tip");
+            // noinspection DialogTitleCapitalization
+            Messages.showErrorDialog("请先选中文件内容再点击！", "Tip");
         }
 
-        AddIssueDetailDialog dialog = new AddIssueDetailDialog(e.getProject(), editor);
+        AddIssueDialog dialog = new AddIssueDialog(e.getProject(), editor);
         dialog.show();
     }
 }

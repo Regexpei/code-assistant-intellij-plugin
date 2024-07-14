@@ -1,9 +1,9 @@
 package cn.regexp.code.assistant.entity;
 
+import com.alibaba.fastjson2.JSON;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.beans.Transient;
 import java.util.Date;
 
 /**
@@ -111,4 +111,8 @@ public class Issue {
      */
     private Date updatedTime;
 
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
 }

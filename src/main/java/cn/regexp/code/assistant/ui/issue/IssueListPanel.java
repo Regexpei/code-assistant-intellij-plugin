@@ -1,18 +1,20 @@
 package cn.regexp.code.assistant.ui.issue;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.io.FileUtil;
+import cn.regexp.code.assistant.common.persistence.JsonPersistence;
 import cn.regexp.code.assistant.entity.Issue;
 import cn.regexp.code.assistant.enums.IssueLevelEnum;
 import cn.regexp.code.assistant.enums.IssueStatusEnum;
 import cn.regexp.code.assistant.enums.IssueTypeEnum;
 import cn.regexp.code.assistant.enums.PriorityEnum;
-import com.alibaba.fastjson2.JSON;
+import cn.regexp.code.assistant.listener.RefreshListener;
+import cn.regexp.code.assistant.util.FileUtils;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsContexts;
 import com.intellij.ui.ScrollPaneFactory;
 import com.intellij.ui.table.TableView;
+import com.intellij.util.Consumer;
 import com.intellij.util.text.DateFormatUtil;
 import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.ui.ListTableModel;
@@ -23,7 +25,9 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
-import java.nio.charset.Charset;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +81,22 @@ public class IssueListPanel extends JPanel {
 
         // 设置表格为斑马纹样式，即交替行颜色不同，以便于阅读和区分。
         this.issueTableView.setStriped(true);
+        // 设置表格选择模式为单选
+        this.issueTableView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        // 双击事件监听
+        this.issueTableView.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    Issue issue = issueTableView.getSelectedObject();
+                    if (issue == null) {
+                        return;
+                    }
+                    // 双击跳转到对应文件
+                    FileUtils.jumpToFile(project, issue.getFilePath());
+                }
+            }
+        });
         this.scrollPane = ScrollPaneFactory.createScrollPane(issueTableView);
 
         // 将滚动面板添加到面板中
@@ -86,11 +106,10 @@ public class IssueListPanel extends JPanel {
     public void initData() {
         this.issueList.clear();
 
-        // 查询数据
-        String data = FileUtil.readString(
-                "E:\\IdeaProjects\\code-assistant-intellij-plugin\\doc\\mock\\MockIssueData.json",
-                Charset.defaultCharset());
-        this.issueList.addAll(JSON.parseArray(data, Issue.class));
+        // 查询数据（后续修改为调用接口获取）
+        this.issueList.addAll(JsonPersistence.getInstance(project, Issue.class).load());
+        // 按照创建时间降序排序
+        this.issueList.sort(Comparator.comparing(Issue::getCreatedTime).reversed());
 
         issueTableView.setModelAndUpdateColumns(
                 new ListTableModel<>(generateColumnsInfo(this.issueList), this.issueList, 0));
@@ -114,8 +133,27 @@ public class IssueListPanel extends JPanel {
             }
         }
 
-        return columnWidthMap.entrySet().stream().map(entry -> createColumnInfo(entry.getKey(), entry.getValue()))
+        return columnWidthMap.keySet().stream().map(this::createColumnInfo)
                 .toArray(ColumnInfo[]::new);
+    }
+
+
+    /**
+     * 添加列表选择监听器，当用户选中时，将更改信息传递给监听器。
+     *
+     * @param listener 监听器
+     */
+    public void addListSelectionListener(final @NotNull Consumer<Issue> listener) {
+        issueTableView.getSelectionModel()
+                .addListSelectionListener(e -> listener.consume(issueTableView.getSelectedObject()));
+    }
+
+    /**
+     * 添加刷新监听器，当用户添加问题时，将更改信息传递给监听器
+     */
+    public void addRefreshListener() {
+        this.project.getMessageBus().connect()
+                .subscribe(RefreshListener.ADD_ISSUE_TOPIC, (RefreshListener) this::initData);
     }
 
     // -------------------------------------------------- 私有方法
@@ -139,8 +177,8 @@ public class IssueListPanel extends JPanel {
         columnWidths.computeIfPresent(columnName, (key, itemAndWidth) -> getMax(itemAndWidth, value));
     }
 
-    private ColumnInfo<Issue, String> createColumnInfo(String columnName, ItemAndWidth itemAndWidth) {
-        return new IssueColumnInfo(COLUMNS_MAP.get(columnName), itemAndWidth.item()) {
+    private ColumnInfo<Issue, String> createColumnInfo(String columnName) {
+        return new IssueColumnInfo(COLUMNS_MAP.get(columnName)) {
             @Nullable
             @Override
             public String valueOf(Issue issue) {
@@ -178,17 +216,8 @@ public class IssueListPanel extends JPanel {
 
     private abstract static class IssueColumnInfo extends ColumnInfo<Issue, String> {
 
-        @NotNull
-        private final String maxString;
-
-        IssueColumnInfo(@NotNull @NlsContexts.ColumnName String name, @NotNull String maxString) {
+        IssueColumnInfo(@NotNull @NlsContexts.ColumnName String name) {
             super(name);
-            this.maxString = maxString;
-        }
-
-        @Override
-        public String getMaxStringValue() {
-            return maxString;
         }
 
         @Override

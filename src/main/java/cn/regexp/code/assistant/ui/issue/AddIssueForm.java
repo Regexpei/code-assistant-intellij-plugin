@@ -10,6 +10,7 @@ import cn.regexp.code.assistant.util.GitRepositoryUtils;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.ui.JBUI;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.util.Objects;
@@ -20,7 +21,8 @@ import java.util.Objects;
  * @description 问题表单
  * @since 1.0.0
  */
-public class IssueDetailForm extends JPanel {
+@Slf4j
+public class AddIssueForm extends JPanel {
     private final Project project;
     @Getter
     private JPanel mainPanel;
@@ -39,7 +41,7 @@ public class IssueDetailForm extends JPanel {
     private JComboBox<SimpleComboBoxItem> priorityBox;
 
 
-    public IssueDetailForm(Project project) {
+    public AddIssueForm(Project project) {
         super();
         this.project = project;
         initUI();
@@ -61,7 +63,7 @@ public class IssueDetailForm extends JPanel {
         this.currentBranchField.setText(GitRepositoryUtils.getCurrentBranchName(project));
     }
 
-    public void initComboBoxData() {
+    private void initComboBoxData() {
         for (IssueLevelEnum value : IssueLevelEnum.values()) {
             SimpleComboBoxItem item = new SimpleComboBoxItem(String.valueOf(value.getCode()), value.getDesc());
             this.issueLevelBox.addItem(item);

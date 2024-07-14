@@ -23,7 +23,7 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Issue" factoryClass="cn.regexp.code.assistant.factory.IssueToolWindowFactory"
+        <toolWindow id="Code Assistant" factoryClass="cn.regexp.code.assistant.factory.CodeAssistantToolWindowFactory"
                     anchor="bottom" icon="/icons/issue.svg"/>
     </extensions>
     <actions>

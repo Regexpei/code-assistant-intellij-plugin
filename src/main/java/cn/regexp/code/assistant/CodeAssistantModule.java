@@ -1,6 +1,7 @@
 package cn.regexp.code.assistant;
 
-import cn.regexp.code.assistant.factory.IssueToolWindowFactory;
+import cn.regexp.code.assistant.factory.CodeAssistantToolWindowFactory;
+import cn.regexp.code.assistant.ui.CodeAssistantUiModule;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import com.google.inject.AbstractModule;
@@ -30,9 +31,9 @@ public class CodeAssistantModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(IssueToolWindowFactory.class);
+        bind(CodeAssistantToolWindowFactory.class);
 
-        install(new CodeAssistantModule());
+        install(new CodeAssistantUiModule());
     }
 
 
