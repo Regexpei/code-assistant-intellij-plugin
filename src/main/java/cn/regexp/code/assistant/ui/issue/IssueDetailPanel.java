@@ -2,7 +2,6 @@ package cn.regexp.code.assistant.ui.issue;
 
 import cn.hutool.http.HtmlUtil;
 import cn.regexp.code.assistant.entity.Issue;
-import com.intellij.openapi.project.Project;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.util.ui.UIUtil;
 import com.intellij.vcsUtil.UIVcsUtil;
