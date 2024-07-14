@@ -24,7 +24,7 @@
         </constraints>
         <properties>
           <editable value="false"/>
-          <enabled value="false"/>
+          <enabled value="true"/>
         </properties>
       </component>
       <component id="94e5f" class="javax.swing.JLabel">
@@ -113,7 +113,7 @@
         </constraints>
         <properties>
           <editable value="false"/>
-          <enabled value="false"/>
+          <enabled value="true"/>
         </properties>
       </component>
       <component id="e7c77" class="javax.swing.JLabel">
@@ -139,7 +139,7 @@
             <constraints/>
             <properties>
               <editable value="false"/>
-              <enabled value="false"/>
+              <enabled value="true"/>
               <foreground color="-16777216"/>
               <lineWrap value="true"/>
               <wrapStyleWord value="false"/>
@@ -209,7 +209,7 @@
         </constraints>
         <properties>
           <editable value="false"/>
-          <enabled value="false"/>
+          <enabled value="true"/>
         </properties>
       </component>
       <component id="5ac2b" class="javax.swing.JLabel">
@@ -228,7 +228,7 @@
         </constraints>
         <properties>
           <editable value="false"/>
-          <enabled value="false"/>
+          <enabled value="true"/>
         </properties>
       </component>
       <component id="7b31b" class="javax.swing.JLabel">

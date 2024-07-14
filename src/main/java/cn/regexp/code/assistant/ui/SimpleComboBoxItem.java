@@ -1,4 +1,4 @@
-package cn.regexp.code.assistant.ui.issue;
+package cn.regexp.code.assistant.ui;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

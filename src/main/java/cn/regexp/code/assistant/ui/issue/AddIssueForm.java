@@ -6,6 +6,7 @@ import cn.regexp.code.assistant.enums.IssueLevelEnum;
 import cn.regexp.code.assistant.enums.IssueStatusEnum;
 import cn.regexp.code.assistant.enums.IssueTypeEnum;
 import cn.regexp.code.assistant.enums.PriorityEnum;
+import cn.regexp.code.assistant.ui.SimpleComboBoxItem;
 import cn.regexp.code.assistant.util.GitRepositoryUtils;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.ui.JBUI;
