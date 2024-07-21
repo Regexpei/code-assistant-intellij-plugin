@@ -25,10 +25,33 @@
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow id="Code Assistant" factoryClass="cn.regexp.code.assistant.factory.CodeAssistantToolWindowFactory"
                     anchor="bottom" icon="/icons/issue.svg"/>
+        <applicationConfigurable displayName="Code Assistant"
+                                 instance="cn.regexp.code.assistant.config.CodeAssistantConfigurable$Proxy"/>
+        <applicationService
+                serviceImplementation="cn.regexp.code.assistant.ui.CodeAssistantSettings"/>
     </extensions>
     <actions>
         <action id="MarkIssueAction" class="cn.regexp.code.assistant.action.MarkIssueAction" text="Mark Issue">
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="$Paste"/>
         </action>
+
+        <!-- 创建问题列表的右键菜单 -->
+        <group id="CodeAssistant.Issue.ListPopup">
+            <separator/>
+        </group>
+
+        <!-- 分配问题给某个人员 -->
+        <action id="CodeAssistant.Issue.AssignTo" text="Assign To"
+                class="cn.regexp.code.assistant.action.MarkIssueAction" icon="AllIcons.Actions.Annotate">
+            <add-to-group group-id="CodeAssistant.Issue.ListPopup" anchor="first"/>
+        </action>
+
+        <!-- 更新问题状态 -->
+        <action id="CodeAssistant.Issue.UpdateStatus" text="Update Status"
+                class="cn.regexp.code.assistant.action.IssueStatusActionGroup$Proxy" icon="AllIcons.Debugger.Watch">
+            <add-to-group group-id="CodeAssistant.Issue.ListPopup" anchor="after"
+                          relative-to-action="CodeAssistant.Issue.AssignTo"/>
+        </action>
+
     </actions>
 </idea-plugin>

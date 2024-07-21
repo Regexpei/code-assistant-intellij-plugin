@@ -10,8 +10,10 @@ import cn.regexp.code.assistant.enums.PriorityEnum;
 import cn.regexp.code.assistant.listener.RefreshListener;
 import cn.regexp.code.assistant.util.FileUtils;
 import com.google.common.collect.Lists;
+import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsContexts;
+import com.intellij.ui.PopupHandler;
 import com.intellij.ui.ScrollPaneFactory;
 import com.intellij.ui.table.TableView;
 import com.intellij.util.Consumer;
@@ -53,6 +55,8 @@ public class IssueListPanel extends JPanel {
 
     @Setter
     private Project project;
+
+    public static final String POPUP_MENU_GROUP_ID = "CodeAssistant.Issue.ListPopup";
 
     /**
      * 列英文名和列中文名映射
@@ -98,6 +102,9 @@ public class IssueListPanel extends JPanel {
             }
         });
         this.scrollPane = ScrollPaneFactory.createScrollPane(issueTableView);
+
+        // 安装右键菜单，ActionPlaces.UNKNOWN 表示动作的显示位置未被明确指
+        PopupHandler.installPopupMenu(issueTableView, POPUP_MENU_GROUP_ID, ActionPlaces.UNKNOWN);
 
         // 将滚动面板添加到面板中
         add(this.scrollPane);

@@ -4,7 +4,9 @@ import com.alibaba.fastjson2.JSON;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Regexpei
@@ -110,6 +112,8 @@ public class Issue {
      * 更新时间
      */
     private Date updatedTime;
+
+    private List<Integer> enabledStatus = Arrays.asList(0, 1, 2);
 
     @Override
     public String toString() {
