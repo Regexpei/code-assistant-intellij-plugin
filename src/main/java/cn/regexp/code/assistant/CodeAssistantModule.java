@@ -1,12 +1,12 @@
 package cn.regexp.code.assistant;
 
 import cn.regexp.code.assistant.factory.CodeAssistantToolWindowFactory;
+import cn.regexp.code.assistant.ui.CodeAssistantSettings;
 import cn.regexp.code.assistant.ui.CodeAssistantUiModule;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import com.google.inject.*;
+import com.intellij.openapi.application.ApplicationManager;
 
 /**
  * @author Regexpei
@@ -31,10 +31,17 @@ public class CodeAssistantModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        setupSettingsProvider();
+
         bind(CodeAssistantToolWindowFactory.class);
 
         install(new CodeAssistantUiModule());
     }
 
+    protected void setupSettingsProvider() {
+        Provider<CodeAssistantSettings> settingsProvider = () -> ApplicationManager.getApplication()
+                .getService(CodeAssistantSettings.class);
+        bind(CodeAssistantSettings.class).toProvider(settingsProvider).in(Singleton.class);
+    }
 
 }

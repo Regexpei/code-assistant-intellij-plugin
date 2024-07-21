@@ -1,5 +1,6 @@
 package cn.regexp.code.assistant.ui;
 
+import cn.regexp.code.assistant.config.CodeAssistantConfigurable;
 import cn.regexp.code.assistant.ui.issue.IssueListPanel;
 import com.google.inject.AbstractModule;
 
@@ -13,5 +14,7 @@ public class CodeAssistantUiModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(IssueListPanel.class).asEagerSingleton();
+        bind(SettingsPanel.class);
+        bind(CodeAssistantConfigurable.class);
     }
 }
