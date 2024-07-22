@@ -1,10 +1,8 @@
 package cn.regexp.code.assistant.ui;
 
-import com.google.common.base.Optional;
 import com.intellij.credentialStore.CredentialAttributes;
 import com.intellij.credentialStore.Credentials;
 import com.intellij.ide.passwordSafe.PasswordSafe;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
@@ -15,6 +13,8 @@ import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 /**
  * @author Regexpei
  * @date 2024/7/20 20:45
@@ -24,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 @Setter
 @Getter
 @Slf4j
+// 定义持久化数据的信息，name 为根标签名称，storages 为存储位置
 @State(name = "CodeAssistantSettings", storages = @Storage("code_assistant_settings.xml"))
 public class CodeAssistantSettings implements PersistentStateComponent<Element> {
 
@@ -40,10 +41,10 @@ public class CodeAssistantSettings implements PersistentStateComponent<Element> 
     private static final String CODE_ASSISTANT_SETTINGS_PASSWORD_KEY = "CODE_ASSISTANT_SETTINGS_PASSWORD_KEY";
     private static final String CODE_ASSISTANT_SETTINGS_TOKEN_KEY = "CODE_ASSISTANT_SETTINGS_TOKEN_KEY";
 
-    private static final CredentialAttributes CREDENTIAL_ATTRIBUTES_PASSWORD = new CredentialAttributes(
-            CodeAssistantSettings.class.getName(), CODE_ASSISTANT_SETTINGS_PASSWORD_KEY);
-    private static final CredentialAttributes CREDENTIAL_ATTRIBUTES_TOKEN = new CredentialAttributes(
-            CodeAssistantSettings.class.getName(), CODE_ASSISTANT_SETTINGS_TOKEN_KEY);
+    private static final CredentialAttributes CREDENTIAL_ATTRIBUTES_PASSWORD =
+            new CredentialAttributes(CodeAssistantSettings.class.getName(), CODE_ASSISTANT_SETTINGS_PASSWORD_KEY);
+    private static final CredentialAttributes CREDENTIAL_ATTRIBUTES_TOKEN =
+            new CredentialAttributes(CodeAssistantSettings.class.getName(), CODE_ASSISTANT_SETTINGS_TOKEN_KEY);
 
 
     /**
@@ -55,8 +56,8 @@ public class CodeAssistantSettings implements PersistentStateComponent<Element> 
     @Override
     public @Nullable Element getState() {
         Element element = new Element(CODE_ASSISTANT_SETTINGS_TAG);
-        element.setAttribute(HOST, (getHost() != null ? getHost() : ""));
-        element.setAttribute(USERNAME, (getUsername() != null ? getUsername() : ""));
+        element.setAttribute(HOST, Optional.ofNullable(this.host).orElse(""));
+        element.setAttribute(USERNAME, Optional.ofNullable(this.username).orElse(""));
         return element;
     }
 
@@ -77,43 +78,14 @@ public class CodeAssistantSettings implements PersistentStateComponent<Element> 
         }
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String username, String password) {
         // 将密码设置为 Credentials 对象
-        PasswordSafe.getInstance()
-                .set(CREDENTIAL_ATTRIBUTES_PASSWORD, new Credentials(null, password != null ? password : ""));
+        Credentials credentials = new Credentials(username, Optional.ofNullable(password).orElse(""));
+        PasswordSafe.getInstance().set(CREDENTIAL_ATTRIBUTES_PASSWORD, credentials);
     }
 
     public String getPassword() {
-        if (!ApplicationManager.getApplication().isDispatchThread()) {
-            if (preloadedPassword == null) {
-                throw new IllegalStateException("Need to call #preloadPassword when password is required in background thread");
-            }
-        } else {
-            preloadPassword();
-        }
-        return preloadedPassword.or("");
-    }
-
-    public void preloadPassword() {
-        Credentials credentials = PasswordSafe.getInstance().get(CREDENTIAL_ATTRIBUTES_PASSWORD);
-        String password = credentials != null ? credentials.getPasswordAsString() : null;
-        preloadedPassword = Optional.fromNullable(password);
-    }
-
-    private Optional<String> preloadedPassword;
-
-
-    public void setToken(String token) {
-        // 将 Token 设置为 Credentials 对象
-        PasswordSafe.getInstance()
-                .set(CREDENTIAL_ATTRIBUTES_TOKEN, new Credentials(null, token != null ? token : ""));
-    }
-
-    public String getToken() {
-        // 获取 Credentials 对象
-        Credentials credentials = PasswordSafe.getInstance().get(CREDENTIAL_ATTRIBUTES_TOKEN);
-        // 获取 Token
-        return credentials != null ? credentials.getPasswordAsString() : null;
+        return PasswordSafe.getInstance().getPassword(CREDENTIAL_ATTRIBUTES_PASSWORD);
     }
 
 }

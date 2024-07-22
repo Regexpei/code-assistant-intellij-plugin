@@ -28,8 +28,7 @@ public class HttpUtils {
         }
 
         String resultStr = HttpUtil.post(url, JSON.toJSONString(data));
-        Result<T> result = JSON.parseObject(resultStr, new TypeReference<>() {
-        });
+        Result<T> result = JSON.parseObject(resultStr, new TypeReference<>() {});
 
         if (isPrintLog) {
             log.info("result: {}", JSON.toJSONString(result));

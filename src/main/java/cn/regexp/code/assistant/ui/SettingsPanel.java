@@ -69,8 +69,6 @@ public class SettingsPanel {
                 Result<String> result = HttpUtils.post(url, authInfoMap);
                 if (result.isSuccess()) {
                     // 登录成功
-                    codeAssistantSettings.setToken(result.getData());
-                    setPassword(password);
                     resultPane.setText(String.format(HTML_TEMPLATE_INFO, "Login successfully!"));
                 } else {
                     resultPane.setText(String.format(HTML_TEMPLATE_ERROR, result.getMsg()));

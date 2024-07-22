@@ -67,7 +67,7 @@ public class CodeAssistantConfigurable implements SearchableConfigurable, VcsCon
             // 发生密码修改
             if (settingsPane.isPasswordModified()) {
                 // 修改配置信息密码
-                codeAssistantSettings.setPassword(settingsPane.getPassword());
+                codeAssistantSettings.setPassword(settingsPane.getUsername(), settingsPane.getPassword());
                 // 重置修改密码状态
                 settingsPane.resetPasswordModification();
             }
