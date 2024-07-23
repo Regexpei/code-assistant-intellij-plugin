@@ -16,6 +16,5 @@ public interface Constant {
      * 通用配置
      */
     ResourceBundle COMMON_RESOURCE = ResourceBundle.getBundle("common");
-    ;
 
 }
