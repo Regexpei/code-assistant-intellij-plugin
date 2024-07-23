@@ -37,14 +37,11 @@ public class CodeAssistantSettings implements PersistentStateComponent<Element> 
 
     private String host = "";
     private String username = "";
+    private String token = "";
 
     private static final String CODE_ASSISTANT_SETTINGS_PASSWORD_KEY = "CODE_ASSISTANT_SETTINGS_PASSWORD_KEY";
-    private static final String CODE_ASSISTANT_SETTINGS_TOKEN_KEY = "CODE_ASSISTANT_SETTINGS_TOKEN_KEY";
-
     private static final CredentialAttributes CREDENTIAL_ATTRIBUTES_PASSWORD =
             new CredentialAttributes(CodeAssistantSettings.class.getName(), CODE_ASSISTANT_SETTINGS_PASSWORD_KEY);
-    private static final CredentialAttributes CREDENTIAL_ATTRIBUTES_TOKEN =
-            new CredentialAttributes(CodeAssistantSettings.class.getName(), CODE_ASSISTANT_SETTINGS_TOKEN_KEY);
 
 
     /**

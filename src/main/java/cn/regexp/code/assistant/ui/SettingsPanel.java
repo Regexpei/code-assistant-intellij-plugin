@@ -70,6 +70,7 @@ public class SettingsPanel {
                 if (result.isSuccess()) {
                     // 登录成功
                     resultPane.setText(String.format(HTML_TEMPLATE_INFO, "Login successfully!"));
+                    codeAssistantSettings.setToken(result.getData());
                 } else {
                     resultPane.setText(String.format(HTML_TEMPLATE_ERROR, result.getMsg()));
                 }

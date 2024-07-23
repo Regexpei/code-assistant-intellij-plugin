@@ -27,8 +27,14 @@
                     anchor="bottom" icon="/icons/issue.svg"/>
         <applicationConfigurable displayName="Code Assistant"
                                  instance="cn.regexp.code.assistant.config.CodeAssistantConfigurable$Proxy"/>
-        <applicationService
-                serviceImplementation="cn.regexp.code.assistant.ui.CodeAssistantSettings"/>
+
+        <!-- 代码助手配置 -->
+        <applicationService serviceImplementation="cn.regexp.code.assistant.ui.CodeAssistantSettings"/>
+
+        <!-- 通用服务 -->
+        <applicationService serviceImplementation="cn.regexp.code.assistant.service.CommonService"/>
+        <!-- 问题服务 -->
+        <applicationService serviceImplementation="cn.regexp.code.assistant.service.IssueService"/>
     </extensions>
     <actions>
         <action id="MarkIssueAction" class="cn.regexp.code.assistant.action.MarkIssueAction" text="Mark Issue">

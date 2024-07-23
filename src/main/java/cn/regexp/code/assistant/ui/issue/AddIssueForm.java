@@ -89,7 +89,6 @@ public class AddIssueForm extends JPanel {
 
     public Issue mapToIssueDTO() {
         Issue issue = new Issue();
-        issue.setId(1L);
         issue.setGitUrl(GitRepositoryUtils.getGitUrl(project));
         issue.setProjectName(project.getName());
         issue.setBranchName(this.currentBranchField.getText());
