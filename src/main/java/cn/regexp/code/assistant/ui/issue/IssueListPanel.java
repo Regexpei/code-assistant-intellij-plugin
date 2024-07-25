@@ -1,13 +1,13 @@
 package cn.regexp.code.assistant.ui.issue;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.regexp.code.assistant.common.persistence.JsonPersistence;
 import cn.regexp.code.assistant.entity.Issue;
 import cn.regexp.code.assistant.enums.IssueLevelEnum;
 import cn.regexp.code.assistant.enums.IssueStatusEnum;
 import cn.regexp.code.assistant.enums.IssueTypeEnum;
 import cn.regexp.code.assistant.enums.PriorityEnum;
 import cn.regexp.code.assistant.listener.RefreshListener;
+import cn.regexp.code.assistant.service.IssueService;
 import cn.regexp.code.assistant.util.FileUtils;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.actionSystem.ActionPlaces;
@@ -113,10 +113,11 @@ public class IssueListPanel extends JPanel {
     public void initData() {
         this.issueList.clear();
 
-        // 查询数据（后续修改为调用接口获取）
-        this.issueList.addAll(JsonPersistence.getInstance(project, Issue.class).load());
+        // 查询数据
+        List<Issue> issues = IssueService.getInstance().listIssue(new Issue()).getRows();
+        this.issueList.addAll(issues);
         // 按照创建时间降序排序
-        this.issueList.sort(Comparator.comparing(Issue::getCreatedTime).reversed());
+        this.issueList.sort(Comparator.comparing(Issue::getCreateTime).reversed());
 
         issueTableView.setModelAndUpdateColumns(
                 new ListTableModel<>(generateColumnsInfo(this.issueList), this.issueList, 0));
@@ -207,10 +208,10 @@ public class IssueListPanel extends JPanel {
             case "issueStatus" -> IssueStatusEnum.getDesc(issue.getIssueStatus());
             case "priority" -> PriorityEnum.getDesc(issue.getPriority());
             case "createdTime" -> {
-                if (issue.getCreatedTime() == null) {
+                if (issue.getCreateTime() == null) {
                     yield "";
                 }
-                yield DateFormatUtil.formatPrettyDateTime(issue.getCreatedTime());
+                yield DateFormatUtil.formatPrettyDateTime(issue.getCreateTime());
             }
             default -> "";
         };

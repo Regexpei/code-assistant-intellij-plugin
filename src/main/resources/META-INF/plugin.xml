@@ -35,7 +35,15 @@
         <applicationService serviceImplementation="cn.regexp.code.assistant.service.CommonService"/>
         <!-- 问题服务 -->
         <applicationService serviceImplementation="cn.regexp.code.assistant.service.IssueService"/>
+        <!-- 用户服务 -->
+        <applicationService serviceImplementation="cn.regexp.code.assistant.service.UserService"/>
     </extensions>
+
+    <applicationListeners>
+        <listener class="cn.regexp.code.assistant.listener.AppStartListener"
+                  topic="com.intellij.ide.AppLifecycleListener"/>
+    </applicationListeners>
+
     <actions>
         <action id="MarkIssueAction" class="cn.regexp.code.assistant.action.MarkIssueAction" text="Mark Issue">
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="$Paste"/>

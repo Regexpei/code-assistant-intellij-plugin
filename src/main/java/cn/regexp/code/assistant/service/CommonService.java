@@ -43,4 +43,23 @@ public class CommonService {
         }
         return JSON.parseObject(response.body(), new TypeReference<>() {});
     }
+
+    public String get(String urlKey, Object data) {
+        // 获取配置
+        CodeAssistantSettings codeAssistantSettings = CodeAssistantModule.getInstance(CodeAssistantSettings.class);
+
+        // 获取 url
+        String url = codeAssistantSettings.getHost() + COMMON_RESOURCE.getString(urlKey);
+        // 创建并执行请求
+        HttpResponse response = HttpUtil.createGet(url)
+                .header("Authorization", "Bearer " + codeAssistantSettings.getToken())
+                .body(JSON.toJSONString(data))
+                .execute();
+
+        if (!response.isOk()) {
+            throw new RuntimeException(String.format("code: %d, cookieStr: %s",
+                    response.getStatus(), response.getCookieStr()));
+        }
+        return response.body();
+    }
 }

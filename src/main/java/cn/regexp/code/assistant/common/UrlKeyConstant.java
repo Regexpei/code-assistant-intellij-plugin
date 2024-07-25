@@ -11,6 +11,17 @@ public interface UrlKeyConstant {
     /**
      * 添加问题
      */
-    String ADD_ISSUE_KEY = "url.addIssue";
+    String ADD_ISSUE_KEY = "url.issue.addIssue";
+
+    /**
+     * 查询问题列表
+     */
+    String LIST_ISSUE_KEY = "url.issue.listIssue";
+
+    /**
+     * 查询插件用户
+     */
+    String LIST_PLUGIN_USER_KEY = "url.user.listPluginUser";
+
 
 }

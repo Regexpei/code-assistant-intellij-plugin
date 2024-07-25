@@ -106,12 +106,12 @@ public class Issue {
     /**
      * 创建时间
      */
-    private Date createdTime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private Date updatedTime;
+    private Date updateTime;
 
     private List<Integer> enabledStatus = Arrays.asList(0, 1, 2);
 

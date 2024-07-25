@@ -1,11 +1,12 @@
 package cn.regexp.code.assistant.ui.issue;
 
-import cn.hutool.core.date.DateTime;
 import cn.regexp.code.assistant.entity.Issue;
+import cn.regexp.code.assistant.entity.User;
 import cn.regexp.code.assistant.enums.IssueLevelEnum;
 import cn.regexp.code.assistant.enums.IssueStatusEnum;
 import cn.regexp.code.assistant.enums.IssueTypeEnum;
 import cn.regexp.code.assistant.enums.PriorityEnum;
+import cn.regexp.code.assistant.service.UserService;
 import cn.regexp.code.assistant.ui.SimpleComboBoxItem;
 import cn.regexp.code.assistant.util.GitRepositoryUtils;
 import com.intellij.openapi.project.Project;
@@ -14,6 +15,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -85,6 +87,16 @@ public class AddIssueForm extends JPanel {
             this.priorityBox.addItem(item);
         }
 
+        List<User> pluginUserList = UserService.getInstance().listPluginUser(project);
+        for (User user : pluginUserList) {
+            SimpleComboBoxItem item = new SimpleComboBoxItem(user.getUsername(), user.getName());
+            this.assigneeBox.addItem(item);
+        }
+
+        User currentUser = UserService.getInstance().getCurrentUser(project);
+        SimpleComboBoxItem item = new SimpleComboBoxItem(currentUser.getUsername(), currentUser.getName());
+        this.markerBox.addItem(item);
+        this.markerBox.setSelectedItem(item);
     }
 
     public Issue mapToIssueDTO() {
@@ -104,8 +116,6 @@ public class AddIssueForm extends JPanel {
         issue.setCodeSegment(this.codeSegmentArea.getText());
         issue.setIssueDetail(this.issueDetailArea.getText());
         issue.setSuggestion(this.suggestionArea.getText());
-        issue.setCreatedTime(DateTime.now());
-        issue.setUpdatedTime(DateTime.now());
         return issue;
     }
 
