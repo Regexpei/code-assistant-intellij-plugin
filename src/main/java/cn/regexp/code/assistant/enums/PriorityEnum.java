@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @Getter
 @AllArgsConstructor
-public enum PriorityEnum {
+public enum PriorityEnum implements BaseEnum {
     HIGH(1, "高"),
     MEDIUM(2, "中"),
     LOW(3, "低");

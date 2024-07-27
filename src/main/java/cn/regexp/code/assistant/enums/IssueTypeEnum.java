@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @Getter
 @AllArgsConstructor
-public enum IssueTypeEnum {
+public enum IssueTypeEnum implements BaseEnum {
 
     PERFORMANCE(1, "性能"),
 

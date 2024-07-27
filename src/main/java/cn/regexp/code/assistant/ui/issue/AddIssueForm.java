@@ -2,10 +2,7 @@ package cn.regexp.code.assistant.ui.issue;
 
 import cn.regexp.code.assistant.entity.Issue;
 import cn.regexp.code.assistant.entity.User;
-import cn.regexp.code.assistant.enums.IssueLevelEnum;
-import cn.regexp.code.assistant.enums.IssueStatusEnum;
-import cn.regexp.code.assistant.enums.IssueTypeEnum;
-import cn.regexp.code.assistant.enums.PriorityEnum;
+import cn.regexp.code.assistant.enums.*;
 import cn.regexp.code.assistant.service.UserService;
 import cn.regexp.code.assistant.ui.SimpleComboBoxItem;
 import cn.regexp.code.assistant.util.GitRepositoryUtils;
@@ -67,26 +64,13 @@ public class AddIssueForm extends JPanel {
     }
 
     private void initComboBoxData() {
-        for (IssueLevelEnum value : IssueLevelEnum.values()) {
-            SimpleComboBoxItem item = new SimpleComboBoxItem(String.valueOf(value.getCode()), value.getDesc());
-            this.issueLevelBox.addItem(item);
-        }
+        BaseEnum.initComboBox(this.issueLevelBox, IssueLevelEnum.values());
+        BaseEnum.initComboBox(this.issueStatusBox, IssueStatusEnum.values());
+        BaseEnum.initComboBox(this.issueTypeBox, IssueTypeEnum.values());
+        BaseEnum.initComboBox(this.priorityBox, PriorityEnum.values());
 
-        for (IssueStatusEnum value : IssueStatusEnum.values()) {
-            SimpleComboBoxItem item = new SimpleComboBoxItem(String.valueOf(value.getCode()), value.getDesc());
-            this.issueStatusBox.addItem(item);
-        }
-
-        for (IssueTypeEnum value : IssueTypeEnum.values()) {
-            SimpleComboBoxItem item = new SimpleComboBoxItem(String.valueOf(value.getCode()), value.getDesc());
-            this.issueTypeBox.addItem(item);
-        }
-
-        for (PriorityEnum value : PriorityEnum.values()) {
-            SimpleComboBoxItem item = new SimpleComboBoxItem(String.valueOf(value.getCode()), value.getDesc());
-            this.priorityBox.addItem(item);
-        }
-
+        this.assigneeBox.addItem(BaseEnum.DEFAULT_ITEM);
+        this.assigneeBox.setSelectedItem(BaseEnum.DEFAULT_ITEM);
         List<User> pluginUserList = UserService.getInstance().listPluginUser(project);
         for (User user : pluginUserList) {
             SimpleComboBoxItem item = new SimpleComboBoxItem(user.getUsername(), user.getName());
@@ -96,7 +80,6 @@ public class AddIssueForm extends JPanel {
         User currentUser = UserService.getInstance().getCurrentUser(project);
         SimpleComboBoxItem item = new SimpleComboBoxItem(currentUser.getUsername(), currentUser.getName());
         this.markerBox.addItem(item);
-        this.markerBox.setSelectedItem(item);
     }
 
     public Issue mapToIssueDTO() {

@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @Getter
 @AllArgsConstructor
-public enum IssueLevelEnum {
+public enum IssueLevelEnum implements BaseEnum {
     MINOR(1, "轻微"),
     MAJOR(2, "重要"),
     CRITICAL(3, "严重"),

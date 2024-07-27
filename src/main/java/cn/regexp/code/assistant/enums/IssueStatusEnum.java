@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @Getter
 @AllArgsConstructor
-public enum IssueStatusEnum {
+public enum IssueStatusEnum implements BaseEnum {
     NEW(1, "新建"),
     ASSIGNED(2, "已分配"),
     PROCESSING(3, "处理中"),
